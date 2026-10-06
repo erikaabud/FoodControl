@@ -1,0 +1,30 @@
+SISTEMA FOODCONTROL - PROJETO COMPLETO
+
+Este pacote contém:
+- Frontend React/Vite original do projeto
+- Backend corrigido, incluindo DELETE de produto e módulo de vendas
+- Banco de dados (DataBase/foodControl.sql)
+
+PASTAS:
+Frontend/
+Backend/
+DataBase/
+
+BACKEND - VENDAS:
+GET    /vendas
+GET    /vendas/formas-pagamento
+GET    /vendas/:id
+POST   /vendas
+PATCH  /vendas/:id/cancelar
+
+PRODUTOS:
+DELETE /produtos/:id
+Produtos sem histórico são excluídos. Produtos com histórico de venda/movimentação são desativados para preservar integridade referencial.
+
+PARA RODAR:
+1) Importe DataBase/foodControl.sql no MySQL.
+2) Confira Backend/.env.
+3) No Backend: npm install && npm run dev
+4) No Frontend: npm install && npm run dev
+
+Observação: o frontend completo foi incluído no pacote. A correção realizada nesta entrega está concentrada no backend de produtos/vendas; telas antigas que ainda usam localStorage continuam com o comportamento original até serem migradas para a API.

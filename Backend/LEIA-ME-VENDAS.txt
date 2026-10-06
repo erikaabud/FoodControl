@@ -1,0 +1,35 @@
+BACKEND FOODCONTROL - PRODUTO + VENDAS
+
+1) npm install
+2) confira o .env
+3) npm run dev
+
+ROTAS DE PRODUTO
+GET    /produtos
+GET    /produtos/:id
+POST   /produtos
+PUT    /produtos/:id
+DELETE /produtos/:id
+
+ROTAS DE VENDA
+GET    /vendas
+GET    /vendas/formas-pagamento
+GET    /vendas/:id
+POST   /vendas
+PATCH  /vendas/:id/cancelar
+
+EXEMPLO POST /vendas
+{
+  "id_cliente": 1,
+  "id_usuario": 1,
+  "id_forma_pagamento": 1,
+  "quantidade_parcelas": 1,
+  "itens": [
+    { "id_produto": 1, "quantidade": 2 },
+    { "id_produto": 2, "quantidade": 1 }
+  ]
+}
+
+IMPORTANTE SOBRE DELETE DE PRODUTO:
+- produto sem histórico: é apagado fisicamente;
+- produto já usado em venda/movimentação: é desativado (ativo=false), preservando histórico e evitando erro de chave estrangeira.

@@ -1,0 +1,628 @@
+/* =========================================
+   RESET
+   ========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+.user-register-page {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+
+  background-color: #f4f6f8;
+
+  font-family: "Poppins", sans-serif;
+}
+
+
+/* =========================================
+   PAINEL ESQUERDO
+   ========================================= */
+
+.user-register-panel {
+  width: 40%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 50px 55px;
+
+  background-color: #0f172a;
+  color: #ffffff;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.user-register-panel-content {
+  width: 100%;
+}
+
+.user-register-panel-content h1 {
+  margin: 0 0 14px;
+
+  font-size: 2.8rem;
+  line-height: 1.1;
+
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+.user-register-panel-content h1 span {
+  color: #7c3aed;
+}
+
+.user-register-line {
+  width: 62px;
+  height: 4px;
+
+  margin-bottom: 24px;
+
+  background-color: #7c3aed;
+
+  border-radius: 10px;
+}
+
+.user-register-panel-content p {
+  margin: 0;
+
+  font-size: 1.45rem;
+  line-height: 1.45;
+
+  font-weight: 400;
+
+  color: #cbd5e1;
+}
+
+.user-register-message {
+  font-size: 1rem;
+  line-height: 1.5;
+
+  color: #94a3b8;
+}
+
+
+/* =========================================
+   LADO DIREITO
+   ========================================= */
+
+.user-register-content {
+  width: 60%;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 35px 50px;
+
+  overflow-y: auto;
+}
+
+
+/* =========================================
+   CARD
+   ========================================= */
+
+.user-register-card {
+  width: 100%;
+  max-width: 760px;
+
+  padding: 34px 40px 30px;
+
+  background-color: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.06),
+    0 2px 8px rgba(15, 23, 42, 0.03);
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =========================================
+   CABEÇALHO
+   ========================================= */
+
+.user-register-header {
+  width: 100%;
+
+  text-align: center;
+
+  margin-bottom: 26px;
+}
+
+.user-register-header h2 {
+  margin: 0 0 8px;
+
+  font-size: 1.9rem;
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+.user-register-header h2 span {
+  color: #7c3aed;
+}
+
+.user-register-title-line {
+  width: 42px;
+  height: 3px;
+
+  margin: 0 auto 17px;
+
+  background-color: #7c3aed;
+
+  border-radius: 10px;
+}
+
+.user-register-header h3 {
+  margin: 0 0 6px;
+
+  font-size: 1.45rem;
+  line-height: 1.3;
+
+  font-weight: 700;
+
+  color: #1e293b;
+}
+
+.user-register-header p {
+  margin: 0;
+
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  color: #64748b;
+}
+
+
+/* =========================================
+   GRID
+   ========================================= */
+
+.user-register-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  column-gap: 18px;
+  row-gap: 17px;
+
+  margin-bottom: 18px;
+}
+
+.user-register-full {
+  grid-column: 1 / -1;
+}
+
+
+/* =========================================
+   CAMPO
+   ========================================= */
+
+.user-register-field {
+  width: 100%;
+  min-width: 0;
+
+  display: block;
+
+  color: #1e293b;
+
+  font-size: 0.86rem;
+  line-height: 1.3;
+
+  font-weight: 600;
+}
+
+
+/* =========================================
+   TEXTO DO LABEL + ASTERISCO
+   ========================================= */
+
+.user-register-label {
+  display: block;
+
+  width: 100%;
+
+  margin-bottom: 7px;
+
+  color: #1e293b;
+
+  font-size: 0.86rem;
+  line-height: 1.3;
+
+  font-weight: 600;
+}
+
+.user-register-label b {
+  display: inline;
+
+  margin-left: 3px;
+
+  color: #ef4444;
+
+  font-weight: 700;
+}
+
+
+/* =========================================
+   INPUT
+   ========================================= */
+
+.user-register-input {
+  width: 100%;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 13px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #d7def0;
+
+  border-radius: 10px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.user-register-input:hover {
+  border-color: #c3cce2;
+}
+
+.user-register-input:focus-within {
+  border-color: #7c3aed;
+
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+
+  background-color: #ffffff;
+}
+
+
+/* =========================================
+   ÍCONES
+   ========================================= */
+
+.user-register-input svg {
+  width: 18px;
+  height: 18px;
+
+  flex-shrink: 0;
+
+  margin-right: 11px;
+
+  color: #94a3b8;
+}
+
+
+/* =========================================
+   INPUT DE TEXTO
+   ========================================= */
+
+.user-register-input input {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+
+  flex: 1;
+
+  padding: 0;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #1e293b;
+
+  font-family: inherit;
+  font-size: 0.88rem;
+}
+
+.user-register-input select {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  flex: 1;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #1e293b;
+  font-family: inherit;
+  font-size: 0.88rem;
+}
+
+.user-register-input input::placeholder {
+  color: #94a3b8;
+
+  opacity: 1;
+
+  font-size: 0.85rem;
+}
+
+
+/* =========================================
+   BOTÃO OLHO
+   ========================================= */
+
+.user-register-input button {
+  width: 24px;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #94a3b8;
+
+  cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.user-register-input button:hover {
+  color: #7c3aed;
+}
+
+
+/* =========================================
+   ERRO
+   ========================================= */
+
+.user-register-error {
+  width: 100%;
+
+  margin: 0 0 12px;
+
+  padding: 9px 12px;
+
+  border-radius: 8px;
+
+  background-color: #fef2f2;
+
+  color: #ef4444;
+
+  font-size: 0.83rem;
+  line-height: 1.4;
+
+  text-align: center;
+}
+
+
+/* =========================================
+   BOTÃO CRIAR USUÁRIO
+   ========================================= */
+
+.user-register-submit {
+  width: 100%;
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  margin-top: 2px;
+
+  padding: 12px 18px;
+
+  border: none;
+  border-radius: 10px;
+
+  background-color: #7c3aed;
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 0.98rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.user-register-submit:hover {
+  background-color: #6d28d9;
+
+  box-shadow: 0 5px 15px rgba(124, 58, 237, 0.22);
+}
+
+.user-register-submit:active {
+  transform: translateY(1px);
+}
+
+.user-register-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   JÁ TEM UMA CONTA
+   ========================================= */
+
+.user-register-login-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  margin-top: 17px;
+
+  font-size: 0.87rem;
+  line-height: 1.4;
+
+  color: #64748b;
+}
+
+.user-register-login-bottom button {
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #7c3aed;
+
+  font-family: inherit;
+
+  font-size: 0.87rem;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.user-register-login-bottom button:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================================
+   RESPONSIVIDADE
+   ========================================= */
+
+@media (max-width: 1000px) {
+
+  .user-register-panel {
+    width: 36%;
+
+    padding: 40px 35px;
+  }
+
+  .user-register-content {
+    width: 64%;
+
+    padding: 30px;
+  }
+
+  .user-register-card {
+    padding: 30px;
+  }
+
+  .user-register-panel-content h1 {
+    font-size: 2.4rem;
+  }
+
+  .user-register-panel-content p {
+    font-size: 1.25rem;
+  }
+}
+
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 800px) {
+
+  .user-register-page {
+    flex-direction: column;
+  }
+
+  .user-register-panel {
+    width: 100%;
+    min-height: auto;
+
+    padding: 30px 25px;
+  }
+
+  .user-register-message {
+    margin-top: 35px;
+  }
+
+  .user-register-content {
+    width: 100%;
+    min-height: auto;
+
+    padding: 25px 20px;
+  }
+
+  .user-register-card {
+    max-width: 700px;
+  }
+}
+
+
+/* =========================================
+   CELULAR
+   ========================================= */
+
+@media (max-width: 600px) {
+
+  .user-register-panel {
+    padding: 25px 20px;
+  }
+
+  .user-register-panel-content h1 {
+    font-size: 2.1rem;
+  }
+
+  .user-register-panel-content p {
+    font-size: 1.15rem;
+  }
+
+  .user-register-content {
+    padding: 20px 15px;
+  }
+
+  .user-register-card {
+    padding: 25px 20px;
+
+    border-radius: 14px;
+  }
+
+  .user-register-grid {
+    grid-template-columns: 1fr;
+
+    row-gap: 16px;
+  }
+
+  .user-register-full {
+    grid-column: auto;
+  }
+
+  .user-register-header {
+    margin-bottom: 23px;
+  }
+
+  .user-register-header h2 {
+    font-size: 1.7rem;
+  }
+
+  .user-register-header h3 {
+    font-size: 1.3rem;
+  }
+}
