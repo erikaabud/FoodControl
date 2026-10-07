@@ -388,23 +388,25 @@ export default function Venda() {
 
                 <div>
                   <b>{clienteSelecionado.nome}</b>
+
                   <small>
                     {clienteSelecionado.tipoCliente === "Aluno"
                       ? `RA: ${clienteSelecionado.ra || "Nao informado"}`
                       : `Tipo: ${clienteSelecionado.tipoCliente}`}
                   </small>
+
                   <em>
                     {clienteSelecionado.tipoCliente === "Aluno"
                       ? `Saldo disponivel: ${money(
-                          Number(clienteSelecionado.credito || 0)
-                        )}`
+                        Number(clienteSelecionado.credito || 0)
+                      )}`
                       : clienteSelecionado.telefone || "Sem telefone"}
                   </em>
                 </div>
               </div>
             ) : (
               pesquisaCliente.trim() !== "" && (
-                <div className="sales-results">
+                <div className="credit-search-results">
                   {clientesFiltrados.map((cliente) => (
                     <button
                       type="button"
@@ -412,7 +414,7 @@ export default function Venda() {
                       key={cliente.id}
                       onClick={() => selecionarCliente(cliente)}
                     >
-                      <div className="avatar big">
+                      <div className="avatar">
                         {String(cliente.nome || "")
                           .charAt(0)
                           .toUpperCase()}
@@ -420,17 +422,26 @@ export default function Venda() {
 
                       <div>
                         <b>{cliente.nome}</b>
+
                         <small>
-                          {cliente.tipoCliente === "Aluno"
-                            ? `RA: ${cliente.ra || "Nao informado"}`
-                            : cliente.tipoCliente}
+                          {cliente.tipoCliente === "Aluno" ? (
+                            <>
+                              RA: {cliente.ra || "Não informado"}
+                              {cliente.turma
+                                ? ` • Turma ${cliente.turma}`
+                                : ""}
+                            </>
+                          ) : (
+                            <>Tipo: {cliente.tipoCliente}</>
+                          )}
                         </small>
+
                         <em>
                           {cliente.tipoCliente === "Aluno"
                             ? `Saldo: ${money(
-                                Number(cliente.credito || 0)
-                              )}`
-                            : cliente.responsavel || cliente.telefone || "Sem complemento"}
+                              Number(cliente.credito || 0)
+                            )}`
+                            : cliente.telefone || "Sem telefone"}
                         </em>
                       </div>
                     </button>

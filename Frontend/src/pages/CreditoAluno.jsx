@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PageHeader, Card, Button, Status, money } from "../components/UI";
 import ModalAviso from "../components/ModalAviso";
 import creditoService from "../../services/creditoService";
@@ -72,74 +72,42 @@ export default function CreditoAluno() {
     }));
   }
 
-  async function buscarAluno() {
-    const texto = pesquisa.trim();
+  async function buscarAluno(texto) {
+    const termo = texto.trim();
 
-    if (!texto) {
+    if (!termo) {
       setResultados([]);
-      mostrarAviso(
-        "Digite o nome, RA ou turma do aluno.",
-        "aviso",
-        "Pesquisa"
-      );
       return;
     }
 
     try {
       setCarregando(true);
-      const alunos = await creditoService.buscarAlunos(texto);
-      setResultados(alunos);
 
-      if (alunos.length === 0) {
-        mostrarAviso(
-          "Nenhum aluno encontrado.",
-          "aviso",
-          "Pesquisa"
-        );
-      }
+      const alunos = await creditoService.buscarAlunos(termo);
+
+      setResultados(alunos || []);
     } catch (error) {
-      mostrarAviso(
-        error.message,
-        "erro",
-        "Erro ao buscar aluno"
-      );
-    } finally {
-      setCarregando(false);
-    }
-  }
-
-  async function carregarMovimentacoes(idAluno) {
-    const dados = await creditoService.listarMovimentacoes(idAluno);
-    setMovimentacoes(dados);
-  }
-
-  async function selecionarAluno(aluno) {
-    try {
-      setCarregando(true);
-
-      const [conta, cliente] = await Promise.all([
-        creditoService.buscarConta(aluno.idAluno),
-        clienteService.buscarClientePorID(aluno.idCliente),
-      ]);
-
-      setAlunoSelecionado(conta);
-      setResponsavel(cliente);
-      await carregarMovimentacoes(aluno.idAluno);
+      console.error("Erro ao buscar aluno:", error);
       setResultados([]);
-      setPesquisa("");
-      setQrGerado(null);
-      setQrValor("");
-      setValorOperacao("");
-    } catch (error) {
-      mostrarAviso(
-        error.message,
-        "erro",
-        "Erro ao selecionar aluno"
-      );
     } finally {
       setCarregando(false);
     }
   }
+
+  useEffect(() => {
+    const texto = pesquisa.trim();
+
+    if (!texto) {
+      setResultados([]);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      buscarAluno(texto);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [pesquisa]);
 
   async function atualizarAlunoSelecionado() {
     if (!alunoSelecionado) {
@@ -342,14 +310,6 @@ export default function CreditoAluno() {
             }}
             placeholder="Digite o nome, RA ou turma..."
           />
-
-          <Button
-            type="button"
-            onClick={buscarAluno}
-            disabled={carregando}
-          >
-            {carregando ? "Carregando..." : "Buscar"}
-          </Button>
         </div>
 
         {resultados.length > 0 && (
@@ -361,17 +321,21 @@ export default function CreditoAluno() {
                 key={aluno.idAluno}
                 onClick={() => selecionarAluno(aluno)}
               >
-                <div className="avatar big">
+                <div className="avatar">
                   {aluno.nome?.charAt(0).toUpperCase()}
                 </div>
 
                 <div>
                   <b>{aluno.nome}</b>
+
                   <small>
                     RA: {aluno.ra || "Não informado"}
-                    {aluno.turma ? ` | ${aluno.turma}` : ""}
+                    {aluno.turma ? ` • Turma ${aluno.turma}` : ""}
                   </small>
-                  <em>Saldo: {money(Number(aluno.credito || 0))}</em>
+
+                  <em>
+                    Saldo: {money(Number(aluno.credito || 0))}
+                  </em>
                 </div>
               </button>
             ))}

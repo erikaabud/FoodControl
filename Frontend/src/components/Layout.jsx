@@ -62,31 +62,9 @@ export default function Layout() {
       .toUpperCase();
 
   function sair() {
-    const desejaSair =
-      window.confirm(
-        "Deseja realmente sair do sistema?"
-      );
-
-    if (!desejaSair) {
-      return;
-    }
-
-    localStorage.removeItem(
-      "usuarioLogado"
-    );
-
-    localStorage.removeItem(
-      "token"
-    );
-
-    setAdminAberto(false);
-
-    navigate(
-      "/login",
-      {
-        replace: true,
-      }
-    );
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuarioLogado");
+    navigate("/login");
   }
 
   return (
@@ -141,11 +119,10 @@ export default function Layout() {
 
               <ChevronDown
                 size={15}
-                className={`chevron ${
-                  clienteAberto
+                className={`chevron ${clienteAberto
                     ? "chevron-open"
                     : ""
-                }`}
+                  }`}
               />
             </button>
 
@@ -228,11 +205,10 @@ export default function Layout() {
 
               <ChevronDown
                 size={16}
-                className={`admin-chevron ${
-                  adminAberto
+                className={`admin-chevron ${adminAberto
                     ? "aberto"
                     : ""
-                }`}
+                  }`}
               />
             </button>
 
