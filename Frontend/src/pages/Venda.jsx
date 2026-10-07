@@ -1,17 +1,25 @@
 import { useEffect, useMemo, useState } from "react";
+
 import clienteService from "../../services/clienteService";
 import produtoService from "../../services/produtoService";
 import vendasService from "../../services/vendasService";
+
 import { PageHeader, Card, Button, money } from "../components/UI";
 import ModalAviso from "../components/ModalAviso";
 
-function formaEhCredito(nomeForma = "") {
-  const texto = nomeForma.toLowerCase();
-  return (
-    texto.includes("crédito") ||
-    texto.includes("credito") ||
-    texto.includes("saldo")
-  );
+/*
+ * Verifica especificamente se a forma de pagamento
+ * é "Crédito do Aluno".
+ *
+ * Cartão de Crédito NÃO entra nessa regra.
+ */
+function formaEhCreditoAluno(nomeForma = "") {
+  const texto = String(nomeForma)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+  return texto.includes("credito do aluno");
 }
 
 function ordenarPorPesquisa(lista, texto, seletor) {
@@ -20,6 +28,7 @@ function ordenarPorPesquisa(lista, texto, seletor) {
   return [...lista].sort((a, b) => {
     const valorA = seletor(a).toLowerCase();
     const valorB = seletor(b).toLowerCase();
+
     const aComeca = valorA.startsWith(busca);
     const bComeca = valorB.startsWith(busca);
 
@@ -40,12 +49,17 @@ export default function Venda() {
   const [produtos, setProdutos] = useState([]);
   const [clientes, setClientes] = useState([]);
   const [formasPagamento, setFormasPagamento] = useState([]);
+
   const [clienteSelecionado, setClienteSelecionado] = useState(null);
+
   const [pesquisaCliente, setPesquisaCliente] = useState("");
   const [pesquisaProduto, setPesquisaProduto] = useState("");
+
   const [formaPagamento, setFormaPagamento] = useState("");
+
   const [carregando, setCarregando] = useState(true);
   const [finalizando, setFinalizando] = useState(false);
+
   const [modal, setModal] = useState({
     aberto: false,
     tipo: "sucesso",
@@ -63,8 +77,14 @@ export default function Venda() {
         vendasService.listarFormasPagamento(),
       ]);
 
-      setClientes((clientesData || []).filter((cliente) => cliente.ativo));
-      setProdutos((produtosData || []).filter((produto) => produto.ativo));
+      setClientes(
+        (clientesData || []).filter((cliente) => cliente.ativo)
+      );
+
+      setProdutos(
+        (produtosData || []).filter((produto) => produto.ativo)
+      );
+
       setFormasPagamento(formasData || []);
     } catch (error) {
       mostrarAviso(
@@ -92,12 +112,16 @@ export default function Venda() {
 
   const quantidadeItens = useMemo(
     () =>
-      carrinho.reduce((soma, item) => soma + item.quantidade, 0),
+      carrinho.reduce(
+        (soma, item) => soma + item.quantidade,
+        0
+      ),
     [carrinho]
   );
 
   const formaSelecionada = formasPagamento.find(
-    (forma) => String(forma.id_forma_pagamento) === formaPagamento
+    (forma) =>
+      String(forma.id_forma_pagamento) === formaPagamento
   );
 
   const clientesFiltrados = useMemo(() => {
@@ -121,8 +145,11 @@ export default function Venda() {
       return alvo.includes(pesquisa);
     });
 
-    return ordenarPorPesquisa(filtrados, pesquisa, (cliente) => cliente.nome)
-      .slice(0, 8);
+    return ordenarPorPesquisa(
+      filtrados,
+      pesquisa,
+      (cliente) => cliente.nome
+    ).slice(0, 8);
   }, [clientes, pesquisaCliente]);
 
   const produtosFiltrados = useMemo(() => {
@@ -137,15 +164,28 @@ export default function Venda() {
         return true;
       }
 
-      const alvo = [produto.nome, produto.categoria].join(" ").toLowerCase();
+      const alvo = [
+        produto.nome,
+        produto.categoria,
+      ]
+        .join(" ")
+        .toLowerCase();
+
       return alvo.includes(pesquisa);
     });
 
-    return ordenarPorPesquisa(filtrados, pesquisa || "a", (produto) => produto.nome)
-      .slice(0, 20);
+    return ordenarPorPesquisa(
+      filtrados,
+      pesquisa || "a",
+      (produto) => produto.nome
+    ).slice(0, 20);
   }, [produtos, pesquisaProduto]);
 
-  function mostrarAviso(mensagem, tipo = "sucesso", titulo = "") {
+  function mostrarAviso(
+    mensagem,
+    tipo = "sucesso",
+    titulo = ""
+  ) {
     setModal({
       aberto: true,
       tipo,
@@ -165,9 +205,16 @@ export default function Venda() {
     setClienteSelecionado(cliente);
     setPesquisaCliente("");
 
+    /*
+     * Se estiver selecionado "Crédito do Aluno"
+     * e trocar para um cliente que não é aluno,
+     * limpa a forma de pagamento.
+     *
+     * Cartão de Crédito NÃO será afetado.
+     */
     if (
       formaSelecionada &&
-      formaEhCredito(formaSelecionada.nome_forma) &&
+      formaEhCreditoAluno(formaSelecionada.nome_forma) &&
       cliente.tipoCliente !== "Aluno"
     ) {
       setFormaPagamento("");
@@ -191,6 +238,7 @@ export default function Venda() {
         "aviso",
         "Produto sem estoque"
       );
+
       return;
     }
 
@@ -218,12 +266,16 @@ export default function Venda() {
           "aviso",
           "Estoque insuficiente"
         );
+
         return estadoAtual;
       }
 
       return estadoAtual.map((item) =>
         item.idProduto === produto.id
-          ? { ...item, quantidade: item.quantidade + 1 }
+          ? {
+              ...item,
+              quantidade: item.quantidade + 1,
+            }
           : item
       );
     });
@@ -237,7 +289,8 @@ export default function Venda() {
             return item;
           }
 
-          const novaQuantidade = item.quantidade + variacao;
+          const novaQuantidade =
+            item.quantidade + variacao;
 
           if (novaQuantidade > item.estoque) {
             mostrarAviso(
@@ -245,10 +298,14 @@ export default function Venda() {
               "aviso",
               "Limite de estoque"
             );
+
             return item;
           }
 
-          return { ...item, quantidade: novaQuantidade };
+          return {
+            ...item,
+            quantidade: novaQuantidade,
+          };
         })
         .filter((item) => item.quantidade > 0)
     );
@@ -261,6 +318,7 @@ export default function Venda() {
         "aviso",
         "Cliente nao selecionado"
       );
+
       return;
     }
 
@@ -270,6 +328,7 @@ export default function Venda() {
         "aviso",
         "Carrinho vazio"
       );
+
       return;
     }
 
@@ -279,11 +338,16 @@ export default function Venda() {
         "aviso",
         "Forma de pagamento"
       );
+
       return;
     }
 
+    /*
+     * SOMENTE Crédito do Aluno exige
+     * que o cliente seja um aluno.
+     */
     if (
-      formaEhCredito(formaSelecionada.nome_forma) &&
+      formaEhCreditoAluno(formaSelecionada.nome_forma) &&
       clienteSelecionado.tipoCliente !== "Aluno"
     ) {
       mostrarAviso(
@@ -291,11 +355,19 @@ export default function Venda() {
         "erro",
         "Pagamento nao permitido"
       );
+
       return;
     }
 
+    /*
+     * SOMENTE Crédito do Aluno verifica
+     * o saldo disponível.
+     *
+     * Cartão de Crédito não verifica
+     * o saldo do aluno.
+     */
     if (
-      formaEhCredito(formaSelecionada.nome_forma) &&
+      formaEhCreditoAluno(formaSelecionada.nome_forma) &&
       total > Number(clienteSelecionado.credito || 0)
     ) {
       mostrarAviso(
@@ -303,6 +375,7 @@ export default function Venda() {
         "erro",
         "Saldo insuficiente"
       );
+
       return;
     }
 
@@ -313,6 +386,7 @@ export default function Venda() {
         id_cliente: clienteSelecionado.id,
         id_forma_pagamento: Number(formaPagamento),
         quantidade_parcelas: 1,
+
         itens: carrinho.map((item) => ({
           id_produto: item.idProduto,
           quantidade: item.quantidade,
@@ -320,9 +394,11 @@ export default function Venda() {
       });
 
       limparVenda();
+
       setClienteSelecionado(null);
       setPesquisaCliente("");
       setPesquisaProduto("");
+
       await carregarDados();
 
       mostrarAviso(
@@ -350,12 +426,18 @@ export default function Venda() {
 
       <div className="sales-layout">
         <div className="sales-main">
+
+          {/* CLIENTE */}
           <Card className="sales-card">
             <div className="sales-card-header">
               <div>
                 <h2>Cliente da Venda</h2>
-                <p>Pesquise por nome, RA, telefone ou responsavel.</p>
+                <p>
+                  Pesquise por nome, RA, telefone ou
+                  responsavel.
+                </p>
               </div>
+
               {clienteSelecionado && (
                 <button
                   type="button"
@@ -381,7 +463,9 @@ export default function Venda() {
             {clienteSelecionado ? (
               <div className="student-mini selected-client sales-selected-client">
                 <div className="avatar big">
-                  {String(clienteSelecionado.nome || "")
+                  {String(
+                    clienteSelecionado.nome || ""
+                  )
                     .charAt(0)
                     .toUpperCase()}
                 </div>
@@ -390,17 +474,25 @@ export default function Venda() {
                   <b>{clienteSelecionado.nome}</b>
 
                   <small>
-                    {clienteSelecionado.tipoCliente === "Aluno"
-                      ? `RA: ${clienteSelecionado.ra || "Nao informado"}`
+                    {clienteSelecionado.tipoCliente ===
+                    "Aluno"
+                      ? `RA: ${
+                          clienteSelecionado.ra ||
+                          "Nao informado"
+                        }`
                       : `Tipo: ${clienteSelecionado.tipoCliente}`}
                   </small>
 
                   <em>
-                    {clienteSelecionado.tipoCliente === "Aluno"
+                    {clienteSelecionado.tipoCliente ===
+                    "Aluno"
                       ? `Saldo disponivel: ${money(
-                        Number(clienteSelecionado.credito || 0)
-                      )}`
-                      : clienteSelecionado.telefone || "Sem telefone"}
+                          Number(
+                            clienteSelecionado.credito || 0
+                          )
+                        )}`
+                      : clienteSelecionado.telefone ||
+                        "Sem telefone"}
                   </em>
                 </div>
               </div>
@@ -412,7 +504,9 @@ export default function Venda() {
                       type="button"
                       className="student-result"
                       key={cliente.id}
-                      onClick={() => selecionarCliente(cliente)}
+                      onClick={() =>
+                        selecionarCliente(cliente)
+                      }
                     >
                       <div className="avatar">
                         {String(cliente.nome || "")
@@ -424,24 +518,35 @@ export default function Venda() {
                         <b>{cliente.nome}</b>
 
                         <small>
-                          {cliente.tipoCliente === "Aluno" ? (
+                          {cliente.tipoCliente ===
+                          "Aluno" ? (
                             <>
-                              RA: {cliente.ra || "Não informado"}
+                              RA:{" "}
+                              {cliente.ra ||
+                                "Não informado"}
+
                               {cliente.turma
                                 ? ` • Turma ${cliente.turma}`
                                 : ""}
                             </>
                           ) : (
-                            <>Tipo: {cliente.tipoCliente}</>
+                            <>
+                              Tipo:{" "}
+                              {cliente.tipoCliente}
+                            </>
                           )}
                         </small>
 
                         <em>
-                          {cliente.tipoCliente === "Aluno"
+                          {cliente.tipoCliente ===
+                          "Aluno"
                             ? `Saldo: ${money(
-                              Number(cliente.credito || 0)
-                            )}`
-                            : cliente.telefone || "Sem telefone"}
+                                Number(
+                                  cliente.credito || 0
+                                )
+                              )}`
+                            : cliente.telefone ||
+                              "Sem telefone"}
                         </em>
                       </div>
                     </button>
@@ -457,12 +562,17 @@ export default function Venda() {
             )}
           </Card>
 
+          {/* PRODUTOS */}
           <Card className="sales-card">
             <div className="sales-card-header">
               <div>
                 <h2>Produtos</h2>
-                <p>Adicione itens com busca inteligente e controle de estoque.</p>
+                <p>
+                  Adicione itens com busca inteligente e
+                  controle de estoque.
+                </p>
               </div>
+
               <span className="status ok">
                 {produtosFiltrados.length} disponiveis
               </span>
@@ -485,36 +595,55 @@ export default function Venda() {
                   type="button"
                   key={produto.id}
                   className="sales-product-card"
-                  onClick={() => adicionarProduto(produto)}
+                  onClick={() =>
+                    adicionarProduto(produto)
+                  }
                 >
                   <div>
                     <b>{produto.nome}</b>
-                    <small>{produto.categoria || "Sem categoria"}</small>
+                    <small>
+                      {produto.categoria ||
+                        "Sem categoria"}
+                    </small>
                   </div>
 
                   <div className="sales-product-meta">
-                    <strong>{money(produto.preco)}</strong>
-                    <span>Estoque: {produto.quantidade}</span>
+                    <strong>
+                      {money(produto.preco)}
+                    </strong>
+
+                    <span>
+                      Estoque: {produto.quantidade}
+                    </span>
                   </div>
                 </button>
               ))}
 
-              {!carregando && produtosFiltrados.length === 0 && (
-                <div className="empty-table sales-empty-card">
-                  Nenhum produto encontrado.
-                </div>
-              )}
+              {!carregando &&
+                produtosFiltrados.length === 0 && (
+                  <div className="empty-table sales-empty-card">
+                    Nenhum produto encontrado.
+                  </div>
+                )}
             </div>
           </Card>
         </div>
 
+        {/* RESUMO DA VENDA */}
         <Card className="sales-summary">
           <div className="sales-card-header">
             <div>
               <h2>Resumo da Venda</h2>
-              <p>Revise os itens e conclua a operacao.</p>
+              <p>
+                Revise os itens e conclua a operacao.
+              </p>
             </div>
-            <button type="button" className="link" onClick={limparVenda}>
+
+            <button
+              type="button"
+              className="link"
+              onClick={limparVenda}
+            >
               Limpar
             </button>
           </div>
@@ -524,6 +653,7 @@ export default function Venda() {
               <small>Itens</small>
               <strong>{quantidadeItens}</strong>
             </div>
+
             <div className="sales-highlight">
               <small>Total</small>
               <strong>{money(total)}</strong>
@@ -532,25 +662,43 @@ export default function Venda() {
 
           <div className="sales-cart-list">
             {carrinho.map((item) => (
-              <div className="sales-cart-item" key={item.idProduto}>
+              <div
+                className="sales-cart-item"
+                key={item.idProduto}
+              >
                 <div>
                   <b>{item.nome}</b>
-                  <small>{money(item.preco)} por unidade</small>
+
+                  <small>
+                    {money(item.preco)} por unidade
+                  </small>
                 </div>
 
                 <div className="sales-qty-control">
                   <button
                     type="button"
                     className="trash"
-                    onClick={() => alterarQuantidade(item.idProduto, -1)}
+                    onClick={() =>
+                      alterarQuantidade(
+                        item.idProduto,
+                        -1
+                      )
+                    }
                   >
                     -
                   </button>
+
                   <span>{item.quantidade}</span>
+
                   <button
                     type="button"
                     className="icon-btn"
-                    onClick={() => alterarQuantidade(item.idProduto, 1)}
+                    onClick={() =>
+                      alterarQuantidade(
+                        item.idProduto,
+                        1
+                      )
+                    }
                   >
                     +
                   </button>
@@ -559,36 +707,60 @@ export default function Venda() {
             ))}
 
             {carrinho.length === 0 && (
-              <div className="empty-table">Nenhum produto adicionado.</div>
+              <div className="empty-table">
+                Nenhum produto adicionado.
+              </div>
             )}
           </div>
 
+          {/* PAGAMENTO */}
           <div className="checkout">
             <div className="row-between">
               <b>Forma de pagamento</b>
+
               <small>
-                {formaSelecionada?.nome_forma || "Nao selecionada"}
+                {formaSelecionada?.nome_forma ||
+                  "Nao selecionada"}
               </small>
             </div>
 
             <select
               value={formaPagamento}
-              onChange={(event) => setFormaPagamento(event.target.value)}
+              onChange={(event) =>
+                setFormaPagamento(event.target.value)
+              }
             >
-              <option value="">Selecione a forma de pagamento</option>
+              <option value="">
+                Selecione a forma de pagamento
+              </option>
+
               {formasPagamento.map((forma) => {
+                /*
+                 * Agora SOMENTE Crédito do Aluno
+                 * é bloqueado para quem não é aluno.
+                 */
                 const desabilitada =
-                  formaEhCredito(forma.nome_forma) &&
-                  clienteSelecionado?.tipoCliente !== "Aluno";
+                  formaEhCreditoAluno(
+                    forma.nome_forma
+                  ) &&
+                  clienteSelecionado?.tipoCliente !==
+                    "Aluno";
 
                 return (
                   <option
-                    key={forma.id_forma_pagamento}
-                    value={forma.id_forma_pagamento}
+                    key={
+                      forma.id_forma_pagamento
+                    }
+                    value={
+                      forma.id_forma_pagamento
+                    }
                     disabled={desabilitada}
                   >
                     {forma.nome_forma}
-                    {desabilitada ? " - disponivel apenas para alunos" : ""}
+
+                    {desabilitada
+                      ? " - disponivel apenas para alunos"
+                      : ""}
                   </option>
                 );
               })}
@@ -602,9 +774,13 @@ export default function Venda() {
             <Button
               type="button"
               onClick={finalizarVenda}
-              disabled={finalizando || carregando}
+              disabled={
+                finalizando || carregando
+              }
             >
-              {finalizando ? "Finalizando..." : "Finalizar Venda"}
+              {finalizando
+                ? "Finalizando..."
+                : "Finalizar Venda"}
             </Button>
           </div>
         </Card>
