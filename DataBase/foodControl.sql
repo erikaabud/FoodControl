@@ -428,3 +428,8 @@ VALUES
     ('Doces');
 
 
+-- INSERT DO USUARIO ADMIN
+INSERT INTO usuario
+(nome, email, telefone, usuario, senha, tipo, ativo)
+VALUES
+('Administrador', 'admin@foodcontrol.com', NULL, 'admin', '123', 'admin', 1);

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ModalAviso from "./ModalAviso";
 
 import {
   Outlet,
@@ -28,12 +29,14 @@ export default function Layout() {
   const [adminAberto, setAdminAberto] =
     useState(false);
 
+  // NOVO: controla o modal de confirmação de saída
+  const [modalSairAberto, setModalSairAberto] =
+    useState(false);
+
   const navigate = useNavigate();
 
   const usuarioLogado = JSON.parse(
-    localStorage.getItem(
-      "usuarioLogado"
-    ) || "null"
+    localStorage.getItem("usuarioLogado") || "null"
   );
 
   const token =
@@ -61,16 +64,14 @@ export default function Layout() {
       .charAt(0)
       .toUpperCase();
 
+  // Abre o modal ao invés do window.confirm
   function sair() {
-    const desejaSair =
-      window.confirm(
-        "Deseja realmente sair do sistema?"
-      );
+    setAdminAberto(false);
+    setModalSairAberto(true);
+  }
 
-    if (!desejaSair) {
-      return;
-    }
-
+  // Só faz logout quando o usuário confirmar
+  function confirmarSaida() {
     localStorage.removeItem(
       "usuarioLogado"
     );
@@ -79,7 +80,7 @@ export default function Layout() {
       "token"
     );
 
-    setAdminAberto(false);
+    setModalSairAberto(false);
 
     navigate(
       "/login",
@@ -277,6 +278,20 @@ export default function Layout() {
           <Outlet />
         </div>
       </main>
+
+      {/* MODAL DE CONFIRMAÇÃO DE SAÍDA */}
+      <ModalAviso
+        aberto={modalSairAberto}
+        tipo="aviso"
+        titulo="Sair do sistema"
+        mensagem="Deseja realmente sair do sistema?"
+        onFechar={() =>
+          setModalSairAberto(false)
+        }
+        onConfirmar={confirmarSaida}
+        textoConfirmar="Sair"
+        textoCancelar="Cancelar"
+      />
     </div>
   );
 }

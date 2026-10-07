@@ -1,69 +1,98 @@
 import {
-    CheckCircle,
-    XCircle,
-    AlertTriangle,
-    Info,
-  } from "lucide-react";
-  
-  import "./ModalAviso.css";
-  
-  export default function ModalAviso({
-    aberto,
-    tipo = "sucesso",
-    titulo,
-    mensagem,
-    onFechar,
-  }) {
-    if (!aberto) {
-      return null;
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+  Info,
+} from "lucide-react";
+
+import "./ModalAviso.css";
+
+export default function ModalAviso({
+  aberto,
+  tipo = "sucesso",
+  titulo,
+  mensagem,
+  onFechar,
+
+  // Usados quando o modal for de confirmação
+  onConfirmar,
+  textoConfirmar = "Confirmar",
+  textoCancelar = "Cancelar",
+}) {
+  if (!aberto) {
+    return null;
+  }
+
+  const configuracoes = {
+    sucesso: {
+      icone: <CheckCircle size={48} />,
+      titulo: "Sucesso!",
+    },
+
+    erro: {
+      icone: <XCircle size={48} />,
+      titulo: "Erro",
+    },
+
+    aviso: {
+      icone: <AlertTriangle size={48} />,
+      titulo: "Atenção",
+    },
+
+    info: {
+      icone: <Info size={48} />,
+      titulo: "Informação",
+    },
+  };
+
+  const configuracao =
+    configuracoes[tipo] || configuracoes.info;
+
+  function clicarFora(event) {
+    if (event.target === event.currentTarget) {
+      onFechar();
     }
-  
-    const configuracoes = {
-      sucesso: {
-        icone: <CheckCircle size={48} />,
-        titulo: "Sucesso!",
-      },
-      erro: {
-        icone: <XCircle size={48} />,
-        titulo: "Erro",
-      },
-      aviso: {
-        icone: <AlertTriangle size={48} />,
-        titulo: "Atenção",
-      },
-      info: {
-        icone: <Info size={48} />,
-        titulo: "Informação",
-      },
-    };
-  
-    const configuracao =
-      configuracoes[tipo] || configuracoes.info;
-  
-    function clicarFora(event) {
-      if (event.target === event.currentTarget) {
-        onFechar();
-      }
-    }
-  
-    return (
+  }
+
+  return (
+    <div
+      className="modal-aviso-overlay"
+      onClick={clicarFora}
+    >
       <div
-        className="modal-aviso-overlay"
-        onClick={clicarFora}
+        className={`modal-aviso modal-${tipo}`}
       >
-        <div
-          className={`modal-aviso modal-${tipo}`}
-        >
-          <div className="modal-aviso-icone">
-            {configuracao.icone}
+        <div className="modal-aviso-icone">
+          {configuracao.icone}
+        </div>
+
+        <h2>
+          {titulo || configuracao.titulo}
+        </h2>
+
+        <p>{mensagem}</p>
+
+        {/* Se recebeu onConfirmar, mostra Cancelar + Confirmar */}
+        {onConfirmar ? (
+          <div className="modal-aviso-acoes">
+            <button
+              type="button"
+              className="modal-aviso-cancelar"
+              onClick={onFechar}
+            >
+              {textoCancelar}
+            </button>
+
+            <button
+              type="button"
+              className="modal-aviso-confirmar"
+              onClick={onConfirmar}
+            >
+              {textoConfirmar}
+            </button>
           </div>
-  
-          <h2>
-            {titulo || configuracao.titulo}
-          </h2>
-  
-          <p>{mensagem}</p>
-  
+        ) : (
+          /* Modais normais continuam com OK */
           <button
             type="button"
             className="modal-aviso-botao"
@@ -71,7 +100,8 @@ import {
           >
             OK
           </button>
-        </div>
+        )}
       </div>
-    );
-  }
+    </div>
+  );
+}
