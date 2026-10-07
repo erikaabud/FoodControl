@@ -1,0 +1,1088 @@
+/* =========================================
+   FOODCONTROL - LOGIN
+========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+.login-page {
+  display: flex;
+
+  width: 100%;
+  min-height: 100vh;
+
+  margin: 0;
+  padding: 0;
+
+  overflow: hidden;
+
+  background: #f7f8ff;
+}
+
+
+/* =========================================
+   LADO ESQUERDO
+========================================= */
+
+.login-brand {
+  position: relative;
+
+  width: 42%;
+  min-height: 100vh;
+
+  overflow: hidden;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      145deg,
+      #111a6a 0%,
+      #10164a 50%,
+      #111c72 100%
+    );
+}
+
+
+/* Conteúdo */
+
+.login-brand-wrapper {
+  position: relative;
+  z-index: 5;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100vh;
+
+  padding:
+    clamp(55px, 9vh, 110px)
+    clamp(45px, 8vw, 130px)
+    55px;
+}
+
+
+/* =========================================
+   MARCA
+========================================= */
+
+.login-brand-header h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(48px, 4.5vw, 72px);
+
+  font-weight: 800;
+
+  line-height: 1;
+
+  letter-spacing: -4px;
+}
+
+.login-brand-header h1 span {
+  color: #6440ff;
+}
+
+
+.login-brand-line {
+  width: 60px;
+  height: 5px;
+
+  margin: 28px 0;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #603cff,
+      #7a50ff
+    );
+}
+
+
+.login-brand-header p {
+  margin: 0;
+
+  color: #aeb9f6;
+
+  font-size:
+    clamp(23px, 2.1vw, 33px);
+
+  line-height: 1.15;
+}
+
+
+/* =========================================
+   BENEFÍCIOS
+========================================= */
+
+.login-features {
+  display: flex;
+  flex-direction: column;
+
+  gap: 25px;
+
+  margin-top:
+    clamp(45px, 8vh, 90px);
+}
+
+
+.login-feature {
+  display: flex;
+  align-items: center;
+
+  gap: 25px;
+}
+
+
+.login-feature-icon {
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 60px;
+
+  width: 60px;
+  height: 60px;
+
+  border-radius: 14px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(87, 64, 255, 0.8),
+      rgba(48, 64, 190, 0.8)
+    );
+
+  box-shadow:
+    0 8px 20px
+    rgba(0, 0, 0, 0.13);
+}
+
+
+.login-feature > div:last-child {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+
+.login-feature strong {
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+
+.login-feature span {
+  color: #aeb9f6;
+
+  font-size: 15px;
+
+  line-height: 1.35;
+}
+
+
+/* =========================================
+   FRASE INFERIOR
+========================================= */
+
+.login-brand-footer {
+  margin-top: auto;
+}
+
+
+.login-footer-line {
+  width: 33px;
+  height: 4px;
+
+  margin-bottom: 18px;
+
+  border-radius: 10px;
+
+  background: #623cff;
+}
+
+
+.login-brand-footer p {
+  margin: 0;
+
+  color: #c5ccff;
+
+  font-size: 18px;
+
+  line-height: 1.35;
+}
+
+
+/* =========================================
+   ONDAS DO FUNDO
+========================================= */
+
+.login-wave {
+  position: absolute;
+
+  pointer-events: none;
+}
+
+
+/* Onda superior */
+
+.login-wave-top {
+  top: -130px;
+  left: -100px;
+
+  width: 620px;
+  height: 280px;
+
+  border-radius: 45% 55% 60% 40%;
+
+  background:
+    linear-gradient(
+      120deg,
+      #5c2cff,
+      #3429cc
+    );
+
+  transform: rotate(-8deg);
+
+  opacity: 0.92;
+}
+
+
+/* Onda central */
+
+.login-wave-middle {
+  top: 25%;
+  right: -260px;
+
+  width: 650px;
+  height: 250px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent,
+      rgba(58, 74, 226, 0.35)
+    );
+
+  transform: rotate(-35deg);
+}
+
+
+/* Onda inferior */
+
+.login-wave-bottom {
+  right: -130px;
+  bottom: -110px;
+
+  width: 620px;
+  height: 300px;
+
+  border-radius: 50% 45% 0 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2f39df,
+      #5629ed,
+      #3725c9
+    );
+
+  transform: rotate(-12deg);
+
+  opacity: 0.9;
+}
+
+
+/* =========================================
+   LADO DIREITO
+========================================= */
+
+.login-area {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 58%;
+  min-height: 100vh;
+
+  padding: 45px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f9faff,
+      #f4f6ff
+    );
+}
+
+
+/* =========================================
+   FORMAS DO FUNDO DIREITO
+========================================= */
+
+.login-background-circle {
+  position: absolute;
+
+  pointer-events: none;
+
+  border-radius: 50%;
+}
+
+
+.circle-one {
+  top: -230px;
+  right: -180px;
+
+  width: 600px;
+  height: 430px;
+
+  background:
+    rgba(213, 215, 255, 0.65);
+
+  transform: rotate(20deg);
+}
+
+
+.circle-two {
+  right: -190px;
+  bottom: -270px;
+
+  width: 720px;
+  height: 500px;
+
+  background:
+    rgba(215, 217, 255, 0.58);
+
+  transform: rotate(-20deg);
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.login-card {
+  position: relative;
+  z-index: 5;
+
+  width: min(100%, 620px);
+
+  padding:
+    clamp(42px, 6vh, 65px)
+    clamp(35px, 4vw, 50px)
+    55px;
+
+  border:
+    1px solid
+    rgba(231, 233, 248, 0.9);
+
+  border-radius: 23px;
+
+  background:
+    rgba(255, 255, 255, 0.94);
+
+  box-shadow:
+    0 25px 65px
+    rgba(45, 54, 130, 0.12);
+
+  backdrop-filter: blur(8px);
+}
+
+
+/* =========================================
+   CABEÇALHO DO CARD
+========================================= */
+
+.login-card-header {
+  margin-bottom: 38px;
+
+  text-align: center;
+}
+
+
+.login-card-header h2 {
+  margin: 0;
+
+  color: #10164a;
+
+  font-size:
+    clamp(40px, 3.4vw, 54px);
+
+  font-weight: 800;
+
+  line-height: 1;
+
+  letter-spacing: -3px;
+}
+
+
+.login-card-header h2 span {
+  color: #5424ee;
+}
+
+
+.login-title-line {
+  width: 55px;
+  height: 4px;
+
+  margin: 26px auto 22px;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #5424ee,
+      #713bff
+    );
+}
+
+
+.login-card-header p {
+  margin: 0;
+
+  color: #5965a5;
+
+  font-size: 19px;
+}
+
+
+/* =========================================
+   FORMULÁRIO
+========================================= */
+
+.login-card form {
+  width: 100%;
+}
+
+
+.login-page .form-group {
+  margin-bottom: 22px;
+}
+
+
+.login-page .form-group label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #10164a;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+/* Campo */
+
+.login-page .input-container {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  width: 100%;
+  height: 60px;
+
+  padding: 0 20px;
+
+  border: 1px solid #c7cdef;
+  border-radius: 12px;
+
+  color: #626cab;
+
+  background: #ffffff;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.login-page .input-container:hover {
+  border-color: #aab3e8;
+}
+
+
+.login-page .input-container:focus-within {
+  border-color: #5925ff;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(89, 37, 255, 0.1);
+}
+
+
+.login-page .input-container input {
+  flex: 1;
+
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+
+  padding: 0;
+
+  border: none;
+  outline: none;
+
+  color: #11195e;
+
+  background: transparent;
+
+  box-shadow: none;
+
+  font-size: 16px;
+}
+
+
+.login-page .input-container input:focus {
+  border: none;
+  outline: none;
+
+  box-shadow: none;
+}
+
+
+.login-page
+.input-container
+input::placeholder {
+  color: #6872b1;
+}
+
+
+/* =========================================
+   MOSTRAR SENHA
+========================================= */
+
+.login-page .show-password {
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  padding: 5px;
+
+  border: none;
+
+  color: #626cab;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.login-page .show-password:hover {
+  color: #5424ee;
+
+  transform: scale(1.08);
+}
+
+/* Remove o olho automático do navegador no campo senha */
+.login-page input[type="password"]::-ms-reveal,
+.login-page input[type="password"]::-ms-clear {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* =========================================
+   ERRO
+========================================= */
+
+.login-error {
+  margin: 0 0 18px;
+
+  padding: 11px 14px;
+
+  border: 1px solid #f3aeb5;
+  border-radius: 8px;
+
+  color: #d62d3a;
+
+  background: #fff0f1;
+
+  font-size: 14px;
+
+  text-align: center;
+}
+
+
+/* =========================================
+   BOTÃO ENTRAR
+========================================= */
+
+.login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  width: 100%;
+  height: 61px;
+
+  margin-top: 32px;
+
+  border: none;
+  border-radius: 11px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      90deg,
+      #4918ff,
+      #5720ff
+    );
+
+  box-shadow:
+    0 10px 25px
+    rgba(82, 32, 255, 0.23);
+
+  font-size: 18px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+
+.login-button:hover:not(:disabled) {
+  filter: brightness(1.1);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 14px 30px
+    rgba(82, 32, 255, 0.3);
+}
+
+
+.login-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+
+.login-button:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   DIVISOR "OU"
+========================================= */
+
+.login-divider {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  margin: 28px 0;
+}
+
+
+.login-divider span {
+  flex: 1;
+
+  height: 1px;
+
+  background: #e0e3f4;
+}
+
+
+.login-divider p {
+  margin: 0;
+
+  color: #6972a6;
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   CRIAR USUÁRIO
+========================================= */
+
+.login-create-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  width: 100%;
+  height: 59px;
+
+  border: 1.5px solid #5720ff;
+  border-radius: 11px;
+
+  color: #3215c4;
+
+  background: #ffffff;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.login-create-button:hover {
+  color: #ffffff;
+
+  background: #5424ee;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================
+   RESPONSIVO - NOTEBOOK
+========================================= */
+
+@media (max-width: 1200px) {
+
+  .login-brand {
+    width: 40%;
+  }
+
+  .login-area {
+    width: 60%;
+
+    padding: 35px;
+  }
+
+  .login-brand-wrapper {
+    padding:
+      70px
+      50px
+      45px;
+  }
+
+  .login-brand-header h1 {
+    font-size: 52px;
+  }
+
+  .login-brand-header p {
+    font-size: 25px;
+  }
+
+  .login-features {
+    margin-top: 55px;
+  }
+
+  .login-feature {
+    gap: 17px;
+  }
+
+  .login-feature-icon {
+    flex-basis: 52px;
+
+    width: 52px;
+    height: 52px;
+  }
+
+}
+
+
+/* =========================================
+   RESPONSIVO - TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+  .login-page {
+    flex-direction: column;
+
+    min-height: 100vh;
+
+    overflow-y: auto;
+  }
+
+
+  .login-brand {
+    width: 100%;
+    min-height: auto;
+  }
+
+
+  .login-brand-wrapper {
+    height: auto;
+
+    padding: 35px 45px;
+  }
+
+
+  .login-brand-header h1 {
+    font-size: 43px;
+  }
+
+
+  .login-brand-line {
+    width: 45px;
+    height: 4px;
+
+    margin: 17px 0;
+  }
+
+
+  .login-brand-header p {
+    font-size: 20px;
+  }
+
+
+  .login-features {
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-top: 30px;
+  }
+
+
+  .login-feature {
+    align-items: flex-start;
+
+    gap: 12px;
+  }
+
+
+  .login-feature-icon {
+    flex: 0 0 44px;
+
+    width: 44px;
+    height: 44px;
+
+    border-radius: 11px;
+  }
+
+
+  .login-feature-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+
+  .login-feature strong {
+    font-size: 14px;
+  }
+
+
+  .login-feature span {
+    font-size: 12px;
+  }
+
+
+  .login-brand-footer {
+    display: none;
+  }
+
+
+  .login-wave-top {
+    top: -160px;
+    left: 55%;
+
+    width: 500px;
+  }
+
+
+  .login-wave-middle,
+  .login-wave-bottom {
+    display: none;
+  }
+
+
+  .login-area {
+    width: 100%;
+    min-height: auto;
+
+    padding: 45px 25px 60px;
+  }
+
+
+  .login-card {
+    max-width: 600px;
+  }
+
+}
+
+
+/* =========================================
+   RESPONSIVO - CELULAR
+========================================= */
+
+@media (max-width: 600px) {
+
+  .login-brand-wrapper {
+    padding: 28px 24px;
+  }
+
+
+  .login-brand-header h1 {
+    font-size: 37px;
+
+    letter-spacing: -2px;
+  }
+
+
+  .login-brand-header p {
+    font-size: 17px;
+  }
+
+
+  .login-brand-line {
+    margin: 13px 0;
+
+    width: 37px;
+  }
+
+
+  .login-features {
+    display: none;
+  }
+
+
+  .login-area {
+    flex: 1;
+
+    padding: 25px 15px 35px;
+  }
+
+
+  .login-card {
+    padding:
+      35px
+      22px
+      38px;
+
+    border-radius: 18px;
+  }
+
+
+  .login-card-header {
+    margin-bottom: 30px;
+  }
+
+
+  .login-card-header h2 {
+    font-size: 36px;
+
+    letter-spacing: -2px;
+  }
+
+
+  .login-title-line {
+    margin: 18px auto;
+
+    width: 45px;
+  }
+
+
+  .login-card-header p {
+    font-size: 16px;
+  }
+
+
+  .login-page .input-container {
+    height: 55px;
+
+    padding: 0 15px;
+  }
+
+
+  .login-page .form-group {
+    margin-bottom: 18px;
+  }
+
+
+  .login-button {
+    height: 56px;
+
+    margin-top: 25px;
+  }
+
+
+  .login-create-button {
+    height: 55px;
+  }
+
+}
+
+
+/* =========================================
+   CELULARES PEQUENOS
+========================================= */
+
+@media (max-width: 380px) {
+
+  .login-brand-wrapper {
+    padding: 22px 18px;
+  }
+
+
+  .login-brand-header h1 {
+    font-size: 32px;
+  }
+
+
+  .login-brand-header p {
+    font-size: 15px;
+  }
+
+
+  .login-area {
+    padding:
+      18px
+      10px
+      30px;
+  }
+
+
+  .login-card {
+    padding:
+      30px
+      17px;
+  }
+
+
+  .login-card-header h2 {
+    font-size: 31px;
+  }
+
+}
